@@ -1,0 +1,315 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		52FA08FA1F010EB300A4AF5E /* amf.c in Sources */ = {isa = PBXBuildFile; fileRef = 52FA08E71F010EB300A4AF5E /* amf.c */; };
+		52FA08FB1F010EB300A4AF5E /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = 52FA08EC1F010EB300A4AF5E /* error.c */; };
+		52FA08FC1F010EB300A4AF5E /* hashswf.c in Sources */ = {isa = PBXBuildFile; fileRef = 52FA08EF1F010EB300A4AF5E /* hashswf.c */; };
+		52FA08FD1F010EB300A4AF5E /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 52FA08F11F010EB300A4AF5E /* log.c */; };
+		52FA08FE1F010EB300A4AF5E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52FA08F31F010EB300A4AF5E /* main.cpp */; };
+		52FA08FF1F010EB300A4AF5E /* parseurl.c in Sources */ = {isa = PBXBuildFile; fileRef = 52FA08F41F010EB300A4AF5E /* parseurl.c */; };
+		52FA09001F010EB300A4AF5E /* PushModule.c in Sources */ = {isa = PBXBuildFile; fileRef = 52FA08F51F010EB300A4AF5E /* PushModule.c */; };
+		52FA09011F010EB300A4AF5E /* rtmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 52FA08F81F010EB300A4AF5E /* rtmp.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		527EC7A41EC2B534001556CD /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		527EC7A61EC2B534001556CD /* StreamingFramework */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = StreamingFramework; sourceTree = BUILT_PRODUCTS_DIR; };
+		52FA08E71F010EB300A4AF5E /* amf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = amf.c; path = StreamingFramework/amf.c; sourceTree = "<group>"; };
+		52FA08E81F010EB300A4AF5E /* amf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = amf.h; path = StreamingFramework/amf.h; sourceTree = "<group>"; };
+		52FA08E91F010EB300A4AF5E /* bytes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bytes.h; path = StreamingFramework/bytes.h; sourceTree = "<group>"; };
+		52FA08EA1F010EB300A4AF5E /* dh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dh.h; path = StreamingFramework/dh.h; sourceTree = "<group>"; };
+		52FA08EB1F010EB300A4AF5E /* dhgroups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dhgroups.h; path = StreamingFramework/dhgroups.h; sourceTree = "<group>"; };
+		52FA08EC1F010EB300A4AF5E /* error.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = error.c; path = StreamingFramework/error.c; sourceTree = "<group>"; };
+		52FA08ED1F010EB300A4AF5E /* error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = error.h; path = StreamingFramework/error.h; sourceTree = "<group>"; };
+		52FA08EE1F010EB300A4AF5E /* handshake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = handshake.h; path = StreamingFramework/handshake.h; sourceTree = "<group>"; };
+		52FA08EF1F010EB300A4AF5E /* hashswf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hashswf.c; path = StreamingFramework/hashswf.c; sourceTree = "<group>"; };
+		52FA08F01F010EB300A4AF5E /* http.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = http.h; path = StreamingFramework/http.h; sourceTree = "<group>"; };
+		52FA08F11F010EB300A4AF5E /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = log.c; path = StreamingFramework/log.c; sourceTree = "<group>"; };
+		52FA08F21F010EB300A4AF5E /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = log.h; path = StreamingFramework/log.h; sourceTree = "<group>"; };
+		52FA08F31F010EB300A4AF5E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = StreamingFramework/main.cpp; sourceTree = "<group>"; };
+		52FA08F41F010EB300A4AF5E /* parseurl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = parseurl.c; path = StreamingFramework/parseurl.c; sourceTree = "<group>"; };
+		52FA08F51F010EB300A4AF5E /* PushModule.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = PushModule.c; path = StreamingFramework/PushModule.c; sourceTree = "<group>"; };
+		52FA08F61F010EB300A4AF5E /* PushModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushModule.h; path = StreamingFramework/PushModule.h; sourceTree = "<group>"; };
+		52FA08F71F010EB300A4AF5E /* rtmp_sys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rtmp_sys.h; path = StreamingFramework/rtmp_sys.h; sourceTree = "<group>"; };
+		52FA08F81F010EB300A4AF5E /* rtmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rtmp.c; path = StreamingFramework/rtmp.c; sourceTree = "<group>"; };
+		52FA08F91F010EB300A4AF5E /* rtmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rtmp.h; path = StreamingFramework/rtmp.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		527EC7A31EC2B534001556CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		527EC79D1EC2B534001556CD = {
+			isa = PBXGroup;
+			children = (
+				52FA09021F010ED900A4AF5E /* StreamingFramework */,
+				527EC7A71EC2B534001556CD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		527EC7A71EC2B534001556CD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				527EC7A61EC2B534001556CD /* StreamingFramework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		52FA09021F010ED900A4AF5E /* StreamingFramework */ = {
+			isa = PBXGroup;
+			children = (
+				52FA08E71F010EB300A4AF5E /* amf.c */,
+				52FA08E81F010EB300A4AF5E /* amf.h */,
+				52FA08E91F010EB300A4AF5E /* bytes.h */,
+				52FA08EA1F010EB300A4AF5E /* dh.h */,
+				52FA08EB1F010EB300A4AF5E /* dhgroups.h */,
+				52FA08EC1F010EB300A4AF5E /* error.c */,
+				52FA08ED1F010EB300A4AF5E /* error.h */,
+				52FA08EE1F010EB300A4AF5E /* handshake.h */,
+				52FA08EF1F010EB300A4AF5E /* hashswf.c */,
+				52FA08F01F010EB300A4AF5E /* http.h */,
+				52FA08F11F010EB300A4AF5E /* log.c */,
+				52FA08F21F010EB300A4AF5E /* log.h */,
+				52FA08F31F010EB300A4AF5E /* main.cpp */,
+				52FA08F41F010EB300A4AF5E /* parseurl.c */,
+				52FA08F51F010EB300A4AF5E /* PushModule.c */,
+				52FA08F61F010EB300A4AF5E /* PushModule.h */,
+				52FA08F71F010EB300A4AF5E /* rtmp_sys.h */,
+				52FA08F81F010EB300A4AF5E /* rtmp.c */,
+				52FA08F91F010EB300A4AF5E /* rtmp.h */,
+			);
+			name = StreamingFramework;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		527EC7A51EC2B534001556CD /* StreamingFramework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 527EC7AD1EC2B534001556CD /* Build configuration list for PBXNativeTarget "StreamingFramework" */;
+			buildPhases = (
+				527EC7A21EC2B534001556CD /* Sources */,
+				527EC7A31EC2B534001556CD /* Frameworks */,
+				527EC7A41EC2B534001556CD /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StreamingFramework;
+			productName = "CDN-Union";
+			productReference = 527EC7A61EC2B534001556CD /* StreamingFramework */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		527EC79E1EC2B534001556CD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "李雪岩";
+				TargetAttributes = {
+					527EC7A51EC2B534001556CD = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 3YJ2DT63UD;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 527EC7A11EC2B534001556CD /* Build configuration list for PBXProject "StreamingFramework" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 527EC79D1EC2B534001556CD;
+			productRefGroup = 527EC7A71EC2B534001556CD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				527EC7A51EC2B534001556CD /* StreamingFramework */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		527EC7A21EC2B534001556CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52FA08FD1F010EB300A4AF5E /* log.c in Sources */,
+				52FA09001F010EB300A4AF5E /* PushModule.c in Sources */,
+				52FA08FA1F010EB300A4AF5E /* amf.c in Sources */,
+				52FA08FB1F010EB300A4AF5E /* error.c in Sources */,
+				52FA08FC1F010EB300A4AF5E /* hashswf.c in Sources */,
+				52FA09011F010EB300A4AF5E /* rtmp.c in Sources */,
+				52FA08FE1F010EB300A4AF5E /* main.cpp in Sources */,
+				52FA08FF1F010EB300A4AF5E /* parseurl.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		527EC7AB1EC2B534001556CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		527EC7AC1EC2B534001556CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		527EC7AE1EC2B534001556CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 3YJ2DT63UD;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		527EC7AF1EC2B534001556CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 3YJ2DT63UD;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		527EC7A11EC2B534001556CD /* Build configuration list for PBXProject "StreamingFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				527EC7AB1EC2B534001556CD /* Debug */,
+				527EC7AC1EC2B534001556CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		527EC7AD1EC2B534001556CD /* Build configuration list for PBXNativeTarget "StreamingFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				527EC7AE1EC2B534001556CD /* Debug */,
+				527EC7AF1EC2B534001556CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 527EC79E1EC2B534001556CD /* Project object */;
+}
