@@ -3147,6 +3147,49 @@ static int
     output[3] = nVal;
     return 4;
 }
+        
+static int local_is_little_endian()
+{
+    union {
+        int a;
+        char b;
+    }check;
+    
+    check.a = 1;
+    return check.b == 1;
+}
+
+void PILI_RTMP_to_big_endian(uint8_t *buf, uint8_t *data, int writeLen, int dataLen)
+{
+    /*
+     当writeLen >= dataLen时
+     buf空出的高位字节补0
+     当writeLen < dataLen
+     buf写入data的低位，剩余的data高位字节丢弃
+     */
+    
+    int diff = 0;
+    int fill0 = 0;
+    
+    if(writeLen >= dataLen) {
+        fill0 = writeLen - dataLen;
+    } else {
+        diff = dataLen - writeLen;
+        dataLen = writeLen;
+    }
+    
+    if(local_is_little_endian()) { //当前为小端
+        for(int i = 0; i < dataLen; i++) {
+            buf[i + fill0] = data[dataLen - i - 1];
+        }
+    } else {
+        memcpy(buf + fill0, data + diff, dataLen);
+    }
+    
+    if(fill0 > 0) {
+        memset(buf, 0, fill0);
+    }
+}
 
 int PILI_RTMP_ReadPacket(PILI_RTMP *r, PILI_RTMPPacket *packet) {
     uint8_t hbuf[RTMP_MAX_HEADER_SIZE] = {0};
@@ -3448,13 +3491,13 @@ int PILI_RTMP_SendChunk(PILI_RTMP *r, PILI_RTMPChunk *chunk, RTMPError *error) {
 }
 
 int PILI_RTMP_SendPacket(PILI_RTMP *r, PILI_RTMPPacket *packet, int queue, RTMPError *error) {
-    static i = 0;
     int ret;
-    int tag_size = 1 + 3 + 3 + 1 + 3 + packet->m_nBodySize;
-
+    int tag_size = 1 + 3 + 3 + 1 + 3 + packet->m_nBodySize + 4;
     if(r->push_module == NULL || strncmp(r->push_module->module_name, "RTMPPushModule", strlen("RTMPPushModule")) == 0) {
         ret = PILI_RTMP_SendPacket_Module(r, packet, queue, error);
+        return ret;
     } else {
+
         char *flv_tag = malloc(tag_size);
         if(flv_tag == NULL) {
             PILI_RTMP_Log(PILI_RTMP_LOGERROR, "malloc error");
@@ -3664,6 +3707,11 @@ void PILI_RTMP_Close(PILI_RTMP *r, RTMPError *error) {
     if (r->m_is_closing) {
         return;
     }
+    
+    if(r->push_module && r->push_module->module_name != NULL) {
+        r->push_module->release(r);
+    }
+    
     r->m_is_closing = 1;
     int i;
     if (PILI_RTMP_IsConnected(r)) {

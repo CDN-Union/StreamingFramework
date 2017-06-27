@@ -276,6 +276,7 @@ typedef struct PILI_RTMP {
 
 int PILI_RTMP_ParseURL(const char *url, int *protocol, PILI_AVal *host,
                        unsigned int *port, PILI_AVal *playpath, PILI_AVal *app);
+void PILI_RTMP_to_big_endian(uint8_t *buf, uint8_t *data, int writeLen, int dataLen);
 
 int PILI_RTMP_ParseURL2(const char *url, int *protocol, PILI_AVal *host,
                         unsigned int *port, PILI_AVal *playpath, PILI_AVal *app, PILI_AVal *domain);

@@ -9,14 +9,16 @@
 #include "PushModule.h"
 #include "rtmp.h"
 #include <string.h>
+#include "rtmp.h"
+#include "xylive_push_sdk_c.h"
 
-extern panda_push_module_t xypush_module;
+extern panda_push_module_t examplepush_module;
 extern panda_push_module_t rtmppush_module;
 
 /* 定义所有模块 */
 panda_push_module_t *global_modules[] = {
-    &rtmppush_module,
-    &xypush_module
+    &examplepush_module,//示例模块
+    &rtmppush_module
     /* 其他厂商的模块加在这里即可 */
 };
 
@@ -39,20 +41,25 @@ expore_all_module(char *negotiate)
     
 }
 
+#define FLV_HEADER_SIZE 11
 
 int
 rtmp_packet_to_flv(PILI_RTMPPacket *packet, char *flv_tag, int tag_size)
 {
-    if(tag_size != (1+3+4+packet->m_nBodySize)) {
-        return -1;
+    if(tag_size != (1+3+3+1+3+packet->m_nBodySize+4)) {
+        return FALSE;
     }
-    memcpy(flv_tag, packet->m_packetType, sizeof(packet->m_packetType)); /*type*/
-    memcpy(flv_tag, packet->m_nBodySize, 3); /*datalen*/
-    memcpy(flv_tag, packet->m_nTimeStamp, 4); /*timestamp3 + extra1*/
-    memcpy(flv_tag, 0, 3); /*stream id  always 0*/
-    memcpy(flv_tag, packet->m_body, packet->m_nBodySize); /*body*/
+    uint32_t pre_size = tag_size;
 
-    return 0;
+    memcpy(flv_tag, &(packet->m_packetType), sizeof(packet->m_packetType));/*type*/
+    PILI_RTMP_to_big_endian(flv_tag+1, &packet->m_nBodySize, 3, 4); /*datalen*/
+    PILI_RTMP_to_big_endian(flv_tag+1+3, &packet->m_nTimeStamp, 3, 4); /*timestamp3 + extra1*/
+    memcpy(flv_tag+1+3+3, (&packet->m_nTimeStamp)+3, 1);
+    memset(flv_tag+1+3+4, 0, 3); /*stream id  always 0*/
+    memcpy(flv_tag+FLV_HEADER_SIZE, (packet->m_body), packet->m_nBodySize); /*body*/
+    PILI_RTMP_to_big_endian(flv_tag+(FLV_HEADER_SIZE+packet->m_nBodySize), &pre_size, 4, 4); /*timestamp3 + extra1*/
+
+    return TRUE;
 }
 
 /* 根据服务器返回选择传输模块 */
@@ -73,39 +80,56 @@ select_module(PILI_AVal *negotiate)
     return &rtmppush_module;
 }
 
-/* 定义星域推流模块 */
-static int xypush_module_init(void *arg, void *err);
-static int xypush_module_release(void *arg);
-static int xypush_module_push(void*, void*, uint32_t, void*);
 
-//static struct XYPushSession *s = NULL;
+/* --------------- */
+/*  定义示例推流模块  */
+/* --------------- */
 
-panda_push_module_t xypush_module =
+static int examplepush_module_init(void *arg, void *err);
+static int examplepush_module_release(void *arg);
+static int examplepush_module_push(void*, void*, uint32_t, void*);
+
+
+/*定义模块*/
+panda_push_module_t examplepush_module =
 {
-    "XYPushModule",
-    xypush_module_init,
-    xypush_module_release,
-    xypush_module_push
+    "ExamplePushModule", /*能力协商标识*/
+    examplepush_module_init,
+    examplepush_module_release,
+    examplepush_module_push
 };
 
 
-int xypush_module_init(void *arg, void *err)
+int examplepush_module_init(void *arg, void *err)
 {
+    /*
+     通过此接口实现模块的初始化工作
+     */
     return TRUE;
+   
 }
 
-int xypush_module_release(void *arg)
+int examplepush_module_release(void *arg)
 {
+    /*
+     通过此接口实现模块的资源释放工作
+     */
     return 0;
 }
 
-int xypush_module_push(void *rtmp, void *buf, uint32_t size, void *err)
+int examplepush_module_push(void *rtmp, void *buf, uint32_t size, void *err)
 {
+
+    /*
+     通过此接口向模块传送flv数据
+     */
     return TRUE;
 }
 
-
+/* --------------- */
 /* 定义rtmp默认推流模块 */
+/* --------------- */
+
 static int rtmp_module_init(void *arg, void *err);
 static int rtmp_module_release(void *arg);
 static int rtmp_module_push(void*, void*, uint32_t, void*);

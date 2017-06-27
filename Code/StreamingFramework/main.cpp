@@ -103,7 +103,7 @@ int publish_using_packet(){
     uint32_t streamid=0;
     
     FILE*fp=NULL;
-    fp=fopen("/Users/leexueyan/片段.flv","rb");
+    fp=fopen("/Users/leexueyan/Downloads/ads.flv","rb");
     if (!fp){
         PILI_RTMP_LogPrintf("Open File Error.\n");
         CleanupSockets();
@@ -124,7 +124,7 @@ int publish_using_packet(){
     //set connection timeout,default 30s
     rtmp->Link.timeout=5;
     RTMPError* err = NULL;
-    if(!PILI_RTMP_SetupURL(rtmp,"rtmp://live.test.com/live/stream1", err))
+    if(!PILI_RTMP_SetupURL(rtmp,"rtmp://120.132.71.213/live.test.com/app/stream1", err))
     {
         PILI_RTMP_Log(PILI_RTMP_LOGERROR,"SetupURL Err\n");
         PILI_RTMP_Free(rtmp);
@@ -151,7 +151,7 @@ int publish_using_packet(){
     }
     
     packet=(PILI_RTMPPacket*)malloc(sizeof(PILI_RTMPPacket));
-    PILI_RTMPPacket_Alloc(packet,1024*256);
+    PILI_RTMPPacket_Alloc(packet,1024*512);
     PILI_RTMPPacket_Reset(packet);
     
     packet->m_hasAbsTimestamp = 0;
@@ -168,14 +168,14 @@ int publish_using_packet(){
     while(1)
     {
         if((((now_time=PILI_RTMP_GetTime())-start_time)
-            <(pre_frame_time)) && bNextIsKey){
+            <(pre_frame_time))){
             //wait for 1 sec if the send process is too fast
             //this mechanism is not very good,need some improvement
             if(pre_frame_time>lasttime){
                 PILI_RTMP_LogPrintf("TimeStamp:%8lu ms\n",pre_frame_time);
                 lasttime=pre_frame_time;
             }
-            sleep(1000);
+            usleep(500);
             continue;
         }
         
@@ -205,6 +205,9 @@ int publish_using_packet(){
         packet->m_nBodySize  = datalength;
         pre_frame_time=timestamp;
         
+//        PILI_RTMP_Log(PILI_RTMP_LOGERROR,"Timestamp: %8lu ms, Pre_frame_time: %8lu ms\n", timestamp, pre_frame_time);
+
+        
         if (!PILI_RTMP_IsConnected(rtmp)){
             PILI_RTMP_Log(PILI_RTMP_LOGERROR,"rtmp is not connect\n");
             break;
@@ -226,9 +229,9 @@ int publish_using_packet(){
                 break;
             }
             if(type==0x17)
-                bNextIsKey=1;
-            else
                 bNextIsKey=0;
+            else
+                bNextIsKey=1;
             
             fseek(fp,-11,SEEK_CUR);
         }
@@ -271,7 +274,7 @@ int publish_using_write(){
     PILI_RTMP *rtmp=NULL;
     RTMPError *err;
     FILE*fp=NULL;
-    fp=fopen("/Users/leexueyan/片段.flv","rb");
+    fp=fopen("/Users/leexueyan/Downloads/ads.flv","rb");
     if (!fp){
         PILI_RTMP_LogPrintf("Open File Error.\n");
         CleanupSockets();
@@ -291,7 +294,7 @@ int publish_using_write(){
     PILI_RTMP_Init(rtmp);
     //set connection timeout,default 30s
     rtmp->Link.timeout=5;
-    if(!PILI_RTMP_SetupURL(rtmp,"rtmp://live.test.com:2004/live/stream1",err))
+    if(!PILI_RTMP_SetupURL(rtmp,"rtmp://120.132.71.213/live.test.com/live/stream1",err))
     {
         PILI_RTMP_Log(PILI_RTMP_LOGERROR,"SetupURL Err\n");
         PILI_RTMP_Free(rtmp);
@@ -327,17 +330,18 @@ int publish_using_write(){
     while(1)
     {
         if((((now_time=PILI_RTMP_GetTime())-start_time)
-            <(pre_frame_time)) && bNextIsKey){
+            <(pre_frame_time))){
             //wait for 1 sec if the send process is too fast
             //this mechanism is not very good,need some improvement
             if(pre_frame_time>lasttime){
-                PILI_RTMP_LogPrintf("TimeStamp:%8lu ms\n",pre_frame_time);
+                //PILI_RTMP_LogPrintf("TimeStamp:%8lu ms\n",pre_frame_time);
                 lasttime=pre_frame_time;
             }
-            sleep(1000);
+            usleep(50);
             continue;
         }
         
+
         //jump over type
         fseek(fp,1,SEEK_CUR);
         if(!ReadU24(&datalength,fp))
@@ -351,7 +355,7 @@ int publish_using_write(){
         memset(pFileBuf,0,11+datalength+4);
         if(fread(pFileBuf,1,11+datalength+4,fp)!=(11+datalength+4))
             break;
-        
+
         pre_frame_time=timestamp;
         
         if (!PILI_RTMP_IsConnected(rtmp)){
@@ -404,7 +408,7 @@ int publish_using_write(){
 
 int main(int argc, char* argv[]){
     //2 Methods:
-    publish_using_packet();
-    //publish_using_write();
+    //publish_using_packet();
+    publish_using_write();
     return 0;
 }
