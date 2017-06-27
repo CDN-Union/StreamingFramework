@@ -12,11 +12,11 @@
 #include "rtmp.h"
 #include "xylive_push_sdk_c.h"
 
-extern panda_push_module_t examplepush_module;
-extern panda_push_module_t rtmppush_module;
+extern push_module_t examplepush_module;
+extern push_module_t rtmppush_module;
 
 /* 定义所有模块 */
-panda_push_module_t *global_modules[] = {
+push_module_t *global_modules[] = {
     &examplepush_module,//示例模块
     &rtmppush_module
     /* 其他厂商的模块加在这里即可 */
@@ -63,7 +63,7 @@ rtmp_packet_to_flv(PILI_RTMPPacket *packet, char *flv_tag, int tag_size)
 }
 
 /* 根据服务器返回选择传输模块 */
-panda_push_module_t *
+push_module_t *
 select_module(PILI_AVal *negotiate)
 {
     int i;
@@ -91,7 +91,7 @@ static int examplepush_module_push(void*, void*, uint32_t, void*);
 
 
 /*定义模块*/
-panda_push_module_t examplepush_module =
+push_module_t examplepush_module =
 {
     "ExamplePushModule", /*能力协商标识*/
     examplepush_module_init,
@@ -134,7 +134,7 @@ static int rtmp_module_init(void *arg, void *err);
 static int rtmp_module_release(void *arg);
 static int rtmp_module_push(void*, void*, uint32_t, void*);
 
-panda_push_module_t rtmppush_module =
+push_module_t rtmppush_module =
 {
     "RTMPPushModule",
     rtmp_module_init,
