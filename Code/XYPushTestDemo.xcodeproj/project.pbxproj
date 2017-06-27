@@ -35,6 +35,7 @@
 		52FA08881F00B31E00A4AF5E /* PushModule.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PushModule.c; sourceTree = "<group>"; };
 		52FA08891F00B31E00A4AF5E /* rtmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rtmp.c; sourceTree = "<group>"; };
 		52FA08921F00B41000A4AF5E /* libxy_living_push_lib_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libxy_living_push_lib_ios.a; sourceTree = "<group>"; };
+		52FA09201F025DF600A4AF5E /* xylive_push_sdk_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xylive_push_sdk_c.h; sourceTree = "<group>"; };
 		6386A1261DEFC9AA00FA8E5D /* XYPushTestDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XYPushTestDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6386A12A1DEFC9AA00FA8E5D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6386A12C1DEFC9AA00FA8E5D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -126,25 +127,26 @@
 		63E8984B1E1FA7B200A668B1 /* sdk */ = {
 			isa = PBXGroup;
 			children = (
-				52FA08921F00B41000A4AF5E /* libxy_living_push_lib_ios.a */,
 				52FA08811F00B31E00A4AF5E /* amf.c */,
-				52FA08821F00B31E00A4AF5E /* dhgroups.h */,
-				52FA08831F00B31E00A4AF5E /* error.c */,
-				52FA08841F00B31E00A4AF5E /* hashswf.c */,
-				52FA08851F00B31E00A4AF5E /* log.c */,
-				52FA08871F00B31E00A4AF5E /* parseurl.c */,
-				52FA08881F00B31E00A4AF5E /* PushModule.c */,
-				52FA08891F00B31E00A4AF5E /* rtmp.c */,
 				63BCD9F01ECC7CB100B23369 /* amf.h */,
 				63BCD9F11ECC7CB100B23369 /* bytes.h */,
 				63BCD9F21ECC7CB100B23369 /* dh.h */,
+				52FA08821F00B31E00A4AF5E /* dhgroups.h */,
+				52FA08831F00B31E00A4AF5E /* error.c */,
 				63BCD9F31ECC7CB100B23369 /* error.h */,
 				63BCD9F41ECC7CB100B23369 /* handshake.h */,
+				52FA08841F00B31E00A4AF5E /* hashswf.c */,
 				63BCD9F51ECC7CB100B23369 /* http.h */,
+				52FA08921F00B41000A4AF5E /* libxy_living_push_lib_ios.a */,
+				52FA08851F00B31E00A4AF5E /* log.c */,
 				63BCD9F71ECC7CB100B23369 /* log.h */,
+				52FA08871F00B31E00A4AF5E /* parseurl.c */,
+				52FA08881F00B31E00A4AF5E /* PushModule.c */,
 				63BCD9F81ECC7CB100B23369 /* PushModule.h */,
 				63BCD9F91ECC7CB100B23369 /* rtmp_sys.h */,
+				52FA08891F00B31E00A4AF5E /* rtmp.c */,
 				63BCD9FA1ECC7CB100B23369 /* rtmp.h */,
+				52FA09201F025DF600A4AF5E /* xylive_push_sdk_c.h */,
 			);
 			path = sdk;
 			sourceTree = "<group>";
@@ -283,7 +285,7 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -332,7 +334,7 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;

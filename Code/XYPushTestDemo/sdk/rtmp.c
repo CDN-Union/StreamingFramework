@@ -1085,7 +1085,8 @@ int PILI_RTMP_Connect(PILI_RTMP *r, PILI_RTMPPacket *cp, RTMPError *error) {
     char negotiate[4096] = {0};
     
     expore_all_module(negotiate);
-    r->Link.negotiate.av_val = negotiate;
+    r->Link.negotiate.av_val = malloc(strlen(negotiate) + 1);
+    memcpy(r->Link.negotiate.av_val, negotiate, strlen(negotiate)+1);
     r->Link.negotiate.av_len = strlen(negotiate);
     
     if (r->Link.app.av_len>4) {
@@ -1201,10 +1202,13 @@ int PILI_RTMP_ConnectStream(PILI_RTMP *r, int seekTime, RTMPError *error) {
 
     r->m_mediaChannel = 0;
 
+    PILI_RTMPPacket_Free(&packet);
     while (!r->m_bPlaying && PILI_RTMP_IsConnected(r) && PILI_RTMP_ReadPacket(r, &packet)) {
         if (RTMPPacket_IsReady(&packet)) {
-            if (!packet.m_nBodySize)
+            if (!packet.m_nBodySize) {
+                PILI_RTMPPacket_Free(&packet);
                 continue;
+            }
             if ((packet.m_packetType == RTMP_PACKET_TYPE_AUDIO) ||
                 (packet.m_packetType == RTMP_PACKET_TYPE_VIDEO) ||
                 (packet.m_packetType == RTMP_PACKET_TYPE_INFO)) {
@@ -1264,7 +1268,7 @@ int PILI_RTMP_ConnectStream_Module(PILI_RTMP *r, RTMPError *error) {
         else if (r->Link.lFlags & RTMP_LF_LIVE)
             PILI_SendFCSubscribe(r, &r->Link.playpath,error);
     }
-    
+    PILI_RTMPPacket_Free(&packet);
     while (!r->m_bPlaying && PILI_RTMP_IsConnected(r) && PILI_RTMP_ReadPacket(r, &packet))
     {
         if (RTMPPacket_IsReady(&packet))
@@ -3149,6 +3153,49 @@ static int
     output[3] = nVal;
     return 4;
 }
+        
+static int local_is_little_endian()
+{
+    union {
+        int a;
+        char b;
+    }check;
+    
+    check.a = 1;
+    return check.b == 1;
+}
+
+void PILI_RTMP_to_big_endian(uint8_t *buf, uint8_t *data, int writeLen, int dataLen)
+{
+    /*
+     当writeLen >= dataLen时
+     buf空出的高位字节补0
+     当writeLen < dataLen
+     buf写入data的低位，剩余的data高位字节丢弃
+     */
+    
+    int diff = 0;
+    int fill0 = 0;
+    
+    if(writeLen >= dataLen) {
+        fill0 = writeLen - dataLen;
+    } else {
+        diff = dataLen - writeLen;
+        dataLen = writeLen;
+    }
+    
+    if(local_is_little_endian()) { //当前为小端
+        for(int i = 0; i < dataLen; i++) {
+            buf[i + fill0] = data[dataLen - i - 1];
+        }
+    } else {
+        memcpy(buf + fill0, data + diff, dataLen);
+    }
+    
+    if(fill0 > 0) {
+        memset(buf, 0, fill0);
+    }
+}
 
 int PILI_RTMP_ReadPacket(PILI_RTMP *r, PILI_RTMPPacket *packet) {
     uint8_t hbuf[RTMP_MAX_HEADER_SIZE] = {0};
@@ -3450,13 +3497,13 @@ int PILI_RTMP_SendChunk(PILI_RTMP *r, PILI_RTMPChunk *chunk, RTMPError *error) {
 }
 
 int PILI_RTMP_SendPacket(PILI_RTMP *r, PILI_RTMPPacket *packet, int queue, RTMPError *error) {
-    static i = 0;
     int ret;
-    int tag_size = 1 + 3 + 3 + 1 + 3 + packet->m_nBodySize;
-
+    int tag_size = 1 + 3 + 3 + 1 + 3 + packet->m_nBodySize + 4;
     if(r->push_module == NULL || strncmp(r->push_module->module_name, "RTMPPushModule", strlen("RTMPPushModule")) == 0) {
         ret = PILI_RTMP_SendPacket_Module(r, packet, queue, error);
+        return ret;
     } else {
+
         char *flv_tag = malloc(tag_size);
         if(flv_tag == NULL) {
             PILI_RTMP_Log(PILI_RTMP_LOGERROR, "malloc error");
@@ -3666,6 +3713,11 @@ void PILI_RTMP_Close(PILI_RTMP *r, RTMPError *error) {
     if (r->m_is_closing) {
         return;
     }
+    
+    if(r->push_module && r->push_module->module_name != NULL) {
+        r->push_module->release(r);
+    }
+    
     r->m_is_closing = 1;
     int i;
     if (PILI_RTMP_IsConnected(r)) {
@@ -3733,6 +3785,7 @@ void PILI_RTMP_Close(PILI_RTMP *r, RTMPError *error) {
     r->m_unackd = 0;
 
     free(r->Link.playpath0.av_val);
+    free(r->Link.negotiate.av_val);
     r->Link.playpath0.av_val = NULL;
 
     if (r->Link.lFlags & RTMP_LF_FTCU) {

@@ -9,12 +9,14 @@
 #include "PushModule.h"
 #include "rtmp.h"
 #include <string.h>
+#include "rtmp.h"
+#include "xylive_push_sdk_c.h"
 
-extern panda_push_module_t xypush_module;
-extern panda_push_module_t rtmppush_module;
+extern push_module_t xypush_module;
+extern push_module_t rtmppush_module;
 
 /* 定义所有模块 */
-panda_push_module_t *global_modules[] = {
+push_module_t *global_modules[] = {
     &rtmppush_module,
     &xypush_module
     /* 其他厂商的模块加在这里即可 */
@@ -39,24 +41,29 @@ expore_all_module(char *negotiate)
     
 }
 
+#define FLV_HEADER_SIZE 11
 
 int
 rtmp_packet_to_flv(PILI_RTMPPacket *packet, char *flv_tag, int tag_size)
 {
-    if(tag_size != (1+3+4+packet->m_nBodySize)) {
-        return -1;
+    if(tag_size != (1+3+3+1+3+packet->m_nBodySize+4)) {
+        return FALSE;
     }
-    memcpy(flv_tag, packet->m_packetType, sizeof(packet->m_packetType)); /*type*/
-    memcpy(flv_tag, packet->m_nBodySize, 3); /*datalen*/
-    memcpy(flv_tag, packet->m_nTimeStamp, 4); /*timestamp3 + extra1*/
-    memcpy(flv_tag, 0, 3); /*stream id  always 0*/
-    memcpy(flv_tag, packet->m_body, packet->m_nBodySize); /*body*/
+    uint32_t pre_size = tag_size;
 
-    return 0;
+    memcpy(flv_tag, &(packet->m_packetType), sizeof(packet->m_packetType));/*type*/
+    PILI_RTMP_to_big_endian(flv_tag+1, &packet->m_nBodySize, 3, 4); /*datalen*/
+    PILI_RTMP_to_big_endian(flv_tag+1+3, &packet->m_nTimeStamp, 3, 4); /*timestamp3 + extra1*/
+    memcpy(flv_tag+1+3+3, (&packet->m_nTimeStamp)+3, 1);
+    memset(flv_tag+1+3+4, 0, 3); /*stream id  always 0*/
+    memcpy(flv_tag+FLV_HEADER_SIZE, (packet->m_body), packet->m_nBodySize); /*body*/
+    PILI_RTMP_to_big_endian(flv_tag+(FLV_HEADER_SIZE+packet->m_nBodySize), &pre_size, 4, 4); /*timestamp3 + extra1*/
+
+    return TRUE;
 }
 
 /* 根据服务器返回选择传输模块 */
-panda_push_module_t *
+push_module_t *
 select_module(PILI_AVal *negotiate)
 {
     int i;
@@ -80,7 +87,7 @@ static int xypush_module_push(void*, void*, uint32_t, void*);
 
 //static struct XYPushSession *s = NULL;
 
-panda_push_module_t xypush_module =
+push_module_t xypush_module =
 {
     "XYPushModule",
     xypush_module_init,
@@ -89,19 +96,49 @@ panda_push_module_t xypush_module =
 };
 
 
+static struct XYPushSession *s =NULL;
 int xypush_module_init(void *arg, void *err)
 {
+    PILI_RTMP *r = (PILI_RTMP*)arg;
+   
+    char pushUrl[1024] = "rtmp://42.51.169.175:3005/live.test.com/live/stream1";
+//    strcat(pushUrl, r->Link.tcUrl.av_val+7);
+    PILI_RTMP_Log(PILI_RTMP_LOGDEBUG, "pushUrl: %s", pushUrl);
+    s = XYPushSession_alloc();
+    if(NULL == s)
+    {
+        goto err;
+    }
+    
+    if(XYPushSession_connect(s, pushUrl, 3000))
+    {
+        PILI_RTMP_Log(PILI_RTMP_LOGERROR, "push session connect failed.");
+        goto err;
+    }
+   
     return TRUE;
+   
+    err:
+    
+        if(s) {
+            XYPushSession_close(s);
+            XYPushSession_release(s);
+        }
+        return FALSE;
 }
 
 int xypush_module_release(void *arg)
 {
+    XYPushSession_close(s);
+    XYPushSession_release(s);
     return 0;
 }
 
 int xypush_module_push(void *rtmp, void *buf, uint32_t size, void *err)
 {
-    return TRUE;
+    int ret;
+    ret = XYPushSession_push(s, (uint8_t*)buf, size);
+    return (ret == 0);
 }
 
 
@@ -110,7 +147,7 @@ static int rtmp_module_init(void *arg, void *err);
 static int rtmp_module_release(void *arg);
 static int rtmp_module_push(void*, void*, uint32_t, void*);
 
-panda_push_module_t rtmppush_module =
+push_module_t rtmppush_module =
 {
     "RTMPPushModule",
     rtmp_module_init,
