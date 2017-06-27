@@ -1083,7 +1083,8 @@ int PILI_RTMP_Connect(PILI_RTMP *r, PILI_RTMPPacket *cp, RTMPError *error) {
     char negotiate[4096] = {0};
     
     expore_all_module(negotiate);
-    r->Link.negotiate.av_val = negotiate;
+    r->Link.negotiate.av_val = malloc(strlen(negotiate) + 1);
+    memcpy(r->Link.negotiate.av_val, negotiate, strlen(negotiate)+1);
     r->Link.negotiate.av_len = strlen(negotiate);
     
     if (r->Link.app.av_len>4) {
@@ -1199,10 +1200,13 @@ int PILI_RTMP_ConnectStream(PILI_RTMP *r, int seekTime, RTMPError *error) {
 
     r->m_mediaChannel = 0;
 
+    PILI_RTMPPacket_Free(&packet);
     while (!r->m_bPlaying && PILI_RTMP_IsConnected(r) && PILI_RTMP_ReadPacket(r, &packet)) {
         if (RTMPPacket_IsReady(&packet)) {
-            if (!packet.m_nBodySize)
+            if (!packet.m_nBodySize) {
+                PILI_RTMPPacket_Free(&packet);
                 continue;
+            }
             if ((packet.m_packetType == RTMP_PACKET_TYPE_AUDIO) ||
                 (packet.m_packetType == RTMP_PACKET_TYPE_VIDEO) ||
                 (packet.m_packetType == RTMP_PACKET_TYPE_INFO)) {
@@ -1262,7 +1266,7 @@ int PILI_RTMP_ConnectStream_Module(PILI_RTMP *r, RTMPError *error) {
         else if (r->Link.lFlags & RTMP_LF_LIVE)
             PILI_SendFCSubscribe(r, &r->Link.playpath,error);
     }
-    
+    PILI_RTMPPacket_Free(&packet);
     while (!r->m_bPlaying && PILI_RTMP_IsConnected(r) && PILI_RTMP_ReadPacket(r, &packet))
     {
         if (RTMPPacket_IsReady(&packet))
@@ -3779,6 +3783,7 @@ void PILI_RTMP_Close(PILI_RTMP *r, RTMPError *error) {
     r->m_unackd = 0;
 
     free(r->Link.playpath0.av_val);
+    free(r->Link.negotiate.av_val);
     r->Link.playpath0.av_val = NULL;
 
     if (r->Link.lFlags & RTMP_LF_FTCU) {

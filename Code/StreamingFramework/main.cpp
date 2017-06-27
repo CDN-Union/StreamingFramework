@@ -272,7 +272,7 @@ int publish_using_write(){
     uint32_t timestamp=0;
     
     PILI_RTMP *rtmp=NULL;
-    RTMPError *err;
+    RTMPError *err = NULL;
     FILE*fp=NULL;
     fp=fopen("/Users/leexueyan/Downloads/ads.flv","rb");
     if (!fp){
@@ -294,7 +294,7 @@ int publish_using_write(){
     PILI_RTMP_Init(rtmp);
     //set connection timeout,default 30s
     rtmp->Link.timeout=5;
-    if(!PILI_RTMP_SetupURL(rtmp,"rtmp://120.132.71.213/live.test.com/live/stream1",err))
+    if(!PILI_RTMP_SetupURL(rtmp,"rtmp://120.132.71.213:2004/live.test.com/live/stream1",err))
     {
         PILI_RTMP_Log(PILI_RTMP_LOGERROR,"SetupURL Err\n");
         PILI_RTMP_Free(rtmp);
