@@ -61,29 +61,32 @@ global_modules[]定义的全局变量，存储所有定义的模块，优先级�
 ### 模块开发示例
 * 实例化模块结构体：
 
-    push_module_t xypush_module =
-    {
+```
+    push_module_t xypush_module = {
         "XYPushModule",  //此字串将放在negotiate字段中代表该模块
         xypush_module_init,
         xypush_module_release,
         xypush_module_push
     };
+```
 
 * 实现接口函数：
 
+```
     int xypush_module_init(void *arg);
-    
     int xypush_module_release(void *arg);
-    
-    int xypush_module_push (void*, void*, uint32_t, void*c);
+    int xypush_module_push (void*, void*, uint32_t, void*);
+```
 
 * 在PushModule.c包含模块头文件并注册模块
 
+```
     #include “xypush_module.h”
     extern push_module_t xypush_module;
     push_module_t *global_modules[] = {
         &rtmppush_module,
         &examplepush_module,
-         &xypush_module,
+        &xypush_module,
         /* 新增模块加在这里即可 */
     };
+```
