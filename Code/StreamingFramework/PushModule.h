@@ -20,7 +20,7 @@ extern "C" {
 
     /* 模块定义 */
     typedef struct push_module_s {
-        
+        /* 此字串将出现在negotiate中代表该模块 */
         const char *module_name;
         /* (PILI_RTMP*, RTMP_Error*) */
         int (*init)(void*, void*);

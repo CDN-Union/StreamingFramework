@@ -15,7 +15,7 @@
 extern push_module_t examplepush_module;
 extern push_module_t rtmppush_module;
 
-/* 定义所有模块 */
+/* 定义所有模块，优先级高的在前 */
 push_module_t *global_modules[] = {
     &examplepush_module,//示例模块
     &rtmppush_module
