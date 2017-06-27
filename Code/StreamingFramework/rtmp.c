@@ -148,6 +148,8 @@ uint32_t
 }
 
 
+extern int
+AMFProp_Dump_name(PILI_AMFObjectProperty *prop, PILI_AVal *p_name);
 
 
 int AMF_Dump_name(PILI_AMFObject *obj, PILI_AVal *p_name)
