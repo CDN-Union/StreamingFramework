@@ -78,7 +78,7 @@ global_modules[]定义的全局变量，存储所有定义的模块，优先级�
     int xypush_module_push (void*, void*, uint32_t, void*);
 ```
 
-* 在PushModule.c包含模块头文件并注册模块
+* 集成模块时，在PushModule.c包含模块头文件并注册模块
 
 ```
     #include “xypush_module.h” /* 注册新增 */
