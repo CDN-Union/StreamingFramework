@@ -101,7 +101,7 @@ int xypush_module_init(void *arg, void *err)
 {
     PILI_RTMP *r = (PILI_RTMP*)arg;
    
-    char pushUrl[1024] = "rtmp://42.51.169.175:3005/live.test.com/live/stream1";
+    char pushUrl[1024] = "rtmp://42.51.169.175:3080/live.test.com/live/stream1";
 //    strcat(pushUrl, r->Link.tcUrl.av_val+7);
     PILI_RTMP_Log(PILI_RTMP_LOGDEBUG, "pushUrl: %s", pushUrl);
     s = XYPushSession_alloc();
