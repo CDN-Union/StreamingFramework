@@ -1,0 +1,10 @@
+#define pt_module_init ff5766ef7f0413b66f
+#define pt_socket_new f5496970a911c6883f
+#define pt_socket_connect fc9107f55171712cff
+#define pt_socket_send fabb79493c052c537f
+#define pt_socket_recv f078c0568216d3014f
+#define pt_socket_close f4ebbbc1de99ad023f
+#define pt_socket_get_stat fade2837eca96f5baf
+#define pt_module_fini f476ec820ea2f90a4f
+#define pt_log_enable f516cff91bd3ff99df
+#define pt_log_disable f0f26390fee5cd620f
