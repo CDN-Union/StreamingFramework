@@ -14,14 +14,16 @@
 /*引入模块头文件*/
 #include "Rtmp_PushModule.h"
 #include "XY_PushModule.h"
+#include "WS_PushModule.h"
 
 extern push_module_t xypush_module;
 extern push_module_t rtmppush_module;
-
+extern push_module_t wspush_module;
 /* 定义所有模块，优先级高的在前 */
 push_module_t *global_modules[] = {
     &rtmppush_module,
     &xypush_module,
+    &wspush_module,
     /* 其他厂商的模块加在这里即可 */
 };
 
