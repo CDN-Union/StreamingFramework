@@ -18,19 +18,8 @@
 #include <string.h>
 
 /* 定义星域推流模块 */
-int xypush_module_init(void *arg, void *err);
-int xypush_module_release(void *arg);
-int xypush_module_push(void*, void*, uint32_t, void*);
 
-
-
-push_module_t xypush_module =
-{
-    "XYPushModule",
-    xypush_module_init,
-    xypush_module_release,
-    xypush_module_push
-};
+extern push_module_t xypush_module;
 
 
 

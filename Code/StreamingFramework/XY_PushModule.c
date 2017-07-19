@@ -12,6 +12,17 @@
 /* ----------------- */
 /* 星域模块 --初始化--  */
 /* ----------------- */
+static int xypush_module_init(void *arg, void *err);
+static int xypush_module_release(void *arg);
+static int xypush_module_push(void*, void*, uint32_t, void*);
+
+push_module_t xypush_module =
+{
+    "XYPushModule",
+    xypush_module_init,
+    xypush_module_release,
+    xypush_module_push
+};
 
 static struct XYPushSession *s = NULL;
 

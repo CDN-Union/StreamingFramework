@@ -9,6 +9,20 @@
 #include "Rtmp_PushModule.h"
 
 
+static int rtmp_module_init(void *arg, void *err);
+static int rtmp_module_release(void *arg);
+static int rtmp_module_push(void* rtmp, void* buf, uint32_t size, void* err);
+
+
+push_module_t rtmppush_module =
+{
+    "RTMPPushModule",
+    rtmp_module_init,
+    rtmp_module_release,
+    rtmp_module_push
+};
+
+
 /* ------------------ */
 /* RTMP模块 --初始化--  */
 /* ------------------ */
